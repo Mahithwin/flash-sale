@@ -1,0 +1,17 @@
+{
+  "name": "flash-sale-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.1.5",
+    "nodemon": "^3.1.11",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "socket.io-client": "^4.8.3"
+  }
+}
