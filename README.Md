@@ -23,8 +23,7 @@ The project is intentionally split into two independent applications.
 
 1) Backend (Node.js + MongoDB)
    - Handles purchase concurrency
-   - Prevents overselling
-   - Rate limiting using Redis
+   - Prevents overselling   
    - Order storage and aggregation
    - WebSocket events for real-time updates
 
@@ -88,11 +87,56 @@ Backend Setup:
 1. cd flash-sale-backend
 2. npm install
 
+
+
+## Dockerized Infrastructure
+MongoDB and Redis are run inside **Docker containers** to ensure:
+
+- Zero local database installation
+- Consistent development environment
+- Easy startup and teardown
+- Data persistence across backend restarts
+- Production-like infrastructure setup
+
+---
+
+## Installing Docker
+
+1. Install **Docker Desktop** from the official website:  
+   https://www.docker.com/products/docker-desktop/
+
+2. Verify installation:
+   ```bash
+   docker --version
+
+
+## MongoDB & Redis Installation Using Docker
+
+`Run MongoDB Container`
+
+docker run -d \
+  --name mongo \
+  -p 27017:27017 \
+  mongo
+
+`Run Redis Container`
+
+docker run -d \
+  --name redis \
+  -p 6379:6379 \
+  redis
+
+`Verify Containers`
+docker ps
+
+
 Create .env file:
 
 PORT=3001
 MONGO_URI=mongodb://localhost:27017/flashsale
 REDIS_URL=redis://127.0.0.1:6379
+NODE_ENV=test
+<!-- NODE_ENV=run -->
 
 Start backend:
 npm run dev
@@ -125,13 +169,12 @@ Lighthouse Scores:
 
 Rate Limiting
 -------------
-Implemented using Redis.
 
 Rules:
 - Maximum 5 purchase attempts per user per minute
 - Maximum 10 requests per IP per minute
 - Exceeded limits return HTTP 429 with Retry-After header
-- Rate limit state persists across server restarts
+
 
 
 Admin Analytics (Aggregation Queries)
@@ -196,7 +239,7 @@ Evaluation Checklist Mapping
 ----------------------------
 Concurrency Control: YES (atomic updates + stress tested)
 Hybrid Rendering: YES (static + live updates)
-Rate Limiting: YES (Redis-backed)
+Rate Limiting: YES 
 Aggregation Queries: YES (database-level)
 Code Quality: YES
 Documentation: YES
