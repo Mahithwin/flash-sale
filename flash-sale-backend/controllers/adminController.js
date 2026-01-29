@@ -85,12 +85,4 @@ exports.getAdminStats = async (req, res) => {
 };
 
 
-exports.getAdminOrders = async (req, res) => {
-    try {
-        const orders = await Order.find().sort({ createdAt: -1 }).limit(50);
-        res.json(orders);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
 
